@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
         spec.setContent(R.id.linearLayout);
-        spec.setIndicator("", res.getDrawable(R.drawable.bin));
+        spec.setIndicator("", res.getDrawable(R.drawable.binin));
         tabs.addTab(spec);
 
         spec = tabs.newTabSpec("mitab2");
@@ -42,5 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.setCurrentTab(0);
         //fin tabs
+    }
+
+    //doble back para salir
+    private static final int INTERVALO = 2000; //2 segundos para salir
+    private long tiempoPrimerClick;
+
+    @Override
+    public void onBackPressed() {
+        if (tiempoPrimerClick + INTERVALO > System.currentTimeMillis()) {
+            super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(this, "Vuelva a presionar para salir", Toast.LENGTH_SHORT).show();
+        }
+        tiempoPrimerClick = System.currentTimeMillis();
     }
 }
