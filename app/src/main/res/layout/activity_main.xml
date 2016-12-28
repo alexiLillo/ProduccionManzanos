@@ -434,7 +434,7 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/sync2"
-                            android:onClick="syncPesaje" />
+                            android:onClick="syncBins" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -454,7 +454,7 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                                 android:text="Ultima sincronización bins: " />
 
                             <TextView
-                                android:id="@+id/txtLastSyncPesajes"
+                                android:id="@+id/txtLastSyncBins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="S/D" />

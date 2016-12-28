@@ -3,15 +3,29 @@ package cl.lillo.produccionmanzanos;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView lastSync;
+    private TextView lastSyncCompleta;
+    private TextView lastSyncBins;
+    private TextView binsDia;
+    private TextView cuadrilla;
+    private TextView cantidadTrabajadores;
+    private ListView listaTrabajadores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lastSync = (TextView) findViewById(R.id.txtLastSync);
+        lastSyncCompleta = (TextView) findViewById(R.id.txtLastSyncCompleta);
+        lastSyncBins = (TextView) findViewById(R.id.txtLastSyncBins);
 
         //TABS
         Resources res = getResources();
