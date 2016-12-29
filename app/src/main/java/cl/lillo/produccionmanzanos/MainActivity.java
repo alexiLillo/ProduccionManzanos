@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         lastSync = (TextView) findViewById(R.id.txtLastSync);
         lastSyncCompleta = (TextView) findViewById(R.id.txtLastSyncCompleta);
         lastSyncBins = (TextView) findViewById(R.id.txtLastSyncBins);
+        binsDia = (TextView) findViewById(R.id.txtCountBinsDia);
+        cuadrilla = (TextView) findViewById(R.id.txtCuadrilla);
+        cantidadTrabajadores = (TextView) findViewById(R.id.txtCantidadTrabajadores);
+        listaTrabajadores = (ListView) findViewById(R.id.listTrabajadores);
 
         //TABS
         Resources res = getResources();

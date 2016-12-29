@@ -67,7 +67,7 @@
                             android:text=" - Bins día: " />
 
                         <TextView
-                            android:id="@+id/txtCountBandejas"
+                            android:id="@+id/txtCountBinsDia"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="S/D" />
