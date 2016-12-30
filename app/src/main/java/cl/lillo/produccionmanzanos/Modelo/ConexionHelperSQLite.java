@@ -9,7 +9,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
  */
 public class ConexionHelperSQLite extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "dbarandanosprod.db";
+    private static final String DATABASE_NAME = "dbmanzanosprod.db";
     private static final int DATABASE_VERSION = 1;
 
     public ConexionHelperSQLite(Context context) {
