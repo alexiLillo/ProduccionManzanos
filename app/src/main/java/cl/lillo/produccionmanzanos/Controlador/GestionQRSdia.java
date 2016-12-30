@@ -8,8 +8,8 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLServer;
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLite;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLServer;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLite;
 
 /**
  * Created by Usuario on 29/09/2016.

@@ -11,9 +11,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLServer;
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLite;
-import cl.lillo.prodarandanos.Modelo.TablaVista;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLServer;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLite;
+import cl.lillo.produccionmanzanos.Modelo.TablaVista;
 
 /**
  * Created by Usuario on 31/08/2016.
@@ -74,7 +74,8 @@ public class GestionTablaVista {
                 return false;
             } else if (deleteLocal()) {
                 //Consulta SQL
-                String query = "select * from VistaApkPesaje where ID_Producto = '32'";
+                //ID_Producto = '25' para manzanos
+                String query = "select * from VistaApkPesaje where ID_Producto = '25'";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {

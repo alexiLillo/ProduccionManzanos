@@ -12,9 +12,9 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLServer;
-import cl.lillo.prodarandanos.Modelo.ConexionHelperSQLite;
-import cl.lillo.prodarandanos.Modelo.Trabajador;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLServer;
+import cl.lillo.produccionmanzanos.Modelo.ConexionHelperSQLite;
+import cl.lillo.produccionmanzanos.Modelo.Trabajador;
 
 /**
  * Created by Usuario on 31/08/2016.

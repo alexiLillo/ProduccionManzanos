@@ -16,7 +16,7 @@ public class Sync {
 
     private GestionPesaje gestionPesaje;
     private GestionTablaVista gestionTablaVista;
-    private GestionTara gestionTara;
+    private GestionProducto gestionProducto;
     private GestionTrabajador gestionTrabajador;
 
     private String sync(boolean syncCompleta, Context context) {
@@ -25,11 +25,11 @@ public class Sync {
                 //instancia
                 gestionPesaje = new GestionPesaje(context);
                 gestionTablaVista = new GestionTablaVista(context);
-                gestionTara = new GestionTara(context);
+                gestionProducto = new GestionProducto(context);
                 gestionTrabajador = new GestionTrabajador(context);
                 //sync todas las tablas
                 gestionTablaVista.selectServerInsertLocal();
-                gestionTara.selectServerInsertLocal();
+                gestionProducto.selectServerInsertLocal();
                 gestionTrabajador.selectServerInsertLocal();
                 //sync pesajes
                 //if (gestionPesaje.selectLocalInsertServer()) {
