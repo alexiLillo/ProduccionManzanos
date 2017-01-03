@@ -241,7 +241,7 @@ public class GestionPesaje {
                 //return guardado;
             }
         }
-        return "Se sincronizaron " + contador + " de " + total + " bandejas";
+        return "Se sincronizaron " + contador + " de " + total + " registros";
     }
 
     public boolean insertServerTEST() {

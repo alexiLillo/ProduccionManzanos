@@ -2,6 +2,7 @@ package cl.lillo.produccionmanzanos.Controlador;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -50,6 +51,25 @@ public class GestionTrabajador {
             Log.w(TAG, "...Error al insertar tabla Trabajador local: " + ex.getMessage());
             return false;
         }
+    }
+
+    public String getNombre(String rut){
+        String nombre = "";
+        String apellido = "";
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select Nombre, Apellido from Trabajador where rut ='" + rut + "'", null);
+            while (cursor.moveToNext()) {
+                String[] cadenaNombre = cursor.getString(0).split(" ");
+                nombre = cadenaNombre[0];
+                String[] cadenaApellido = cursor.getString(1).split(" ");
+                apellido = cadenaApellido[0];
+            }
+            data.close();
+        } catch (Exception ex) {
+            Log.w(TAG, "...Error al leer pesaje local SYNC: " + ex.getMessage());
+        }
+        return nombre + " " + apellido;
     }
 
     private boolean deleteLocal() {

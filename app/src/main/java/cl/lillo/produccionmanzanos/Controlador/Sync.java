@@ -38,7 +38,10 @@ public class Sync {
                 //respaldo
                 //gestionPesaje.insertServerTEST();
                 //}
-                return gestionPesaje.selectLocalInsertServer();
+
+                //return gestionPesaje.selectLocalInsertServer();
+
+                return "Datos de aplicación sincronizados";
 
             } else {
                 //instancia

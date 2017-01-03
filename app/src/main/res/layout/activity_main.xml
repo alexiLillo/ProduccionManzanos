@@ -77,9 +77,80 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="16dp"
                         android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Fundo:" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Potrero:" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Sector:" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/spinFundo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center" />
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="45dp"
+                                android:layout_margin="0dp"
+                                android:background="@color/colorAccent"
+                                android:orientation="horizontal" />
+
+                            <Spinner
+                                android:id="@+id/spinPotrero"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|center"
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="45dp"
+                                android:layout_margin="0dp"
+                                android:background="@color/colorAccent"
+                                android:orientation="horizontal" />
+
+                            <Spinner
+                                android:id="@+id/spinSector"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/colorAccent"
+                            android:orientation="horizontal" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -87,12 +158,76 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Variedad:" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Cuartel:" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/spinVariedad"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|center"
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="45dp"
+                                android:layout_margin="0dp"
+                                android:background="@color/colorAccent"
+                                android:orientation="horizontal" />
+
+                            <Spinner
+                                android:id="@+id/spinCuartel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+
+                            android:background="@color/colorAccent"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="Escanear códigos:"
-                                android:textSize="30sp"
-                                android:layout_weight="1"/>
+                                android:textSize="30sp" />
 
                             <ImageButton
                                 android:layout_width="wrap_content"
@@ -106,47 +241,86 @@
                             android:id="@+id/listTrabajadores"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"></ListView>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Cuadrilla: "
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:id="@+id/txtCuadrilla"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="S/D"
-                                android:textSize="20sp" />
-
-                        </LinearLayout>
+                            android:layout_weight="1"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"></ListView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            >
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="QR bin: "
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/txtQRbin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="S/D"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_weight="1">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Trabajadores: "
-                                    android:textSize="20sp" />
+                                    android:textSize="18sp" />
 
                                 <TextView
                                     android:id="@+id/txtCantidadTrabajadores"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="S/D"
-                                    android:textSize="20sp" />
+                                    android:textSize="18dp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cuadrilla: "
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/txtCuadrilla"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="S/D"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+
+
 
                     </LinearLayout>
 
@@ -155,15 +329,15 @@
                         android:layout_height="wrap_content">
 
                         <Button
-                            android:id="@+id/btExport"
+                            android:id="@+id/btRegistrar"
                             android:layout_width="wrap_content"
                             android:layout_height="81dp"
                             android:layout_weight="1"
                             android:background="@color/colorPrimary"
                             android:drawableTop="@drawable/binout"
-                            android:onClick="insertPesaje"
+                            android:onClick="insertBin"
                             android:padding="16dp"
-                            android:text="Exportar"
+                            android:text="Registrar Bin"
                             android:textColor="#fff" />
 
                         <Button
@@ -392,7 +566,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sincronizar trabajadores"
+                            android:text="Sincronizar datos"
                             android:textSize="20sp" />
 
                         <LinearLayout
@@ -464,7 +638,7 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Sincronización de bins registrados con el servidor, considerar que mientras mas tiempo pase entre una sincronizacion y otra, tomará mas tiempo sincronizar." />
+                            android:text="Sincronización de bins registrados con el servidor, considerar que mientras más tiempo pase entre una sincronización y otra, tomará más tiempo sincronizar." />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -550,7 +724,6 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                                 android:textSize="18sp" />
 
                         </LinearLayout>
-
 
 
                         <TextView
