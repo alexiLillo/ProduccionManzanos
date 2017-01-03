@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,18 +23,26 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import cl.lillo.produccionmanzanos.Controlador.GestionPesaje;
+import cl.lillo.produccionmanzanos.Controlador.GestionProducto;
 import cl.lillo.produccionmanzanos.Controlador.GestionQRSdia;
 import cl.lillo.produccionmanzanos.Controlador.GestionTablaVista;
 import cl.lillo.produccionmanzanos.Controlador.GestionTrabajador;
 import cl.lillo.produccionmanzanos.Controlador.Sync;
+import cl.lillo.produccionmanzanos.Modelo.Pesaje;
+import cl.lillo.produccionmanzanos.Modelo.Producto;
 import cl.lillo.produccionmanzanos.Otros.CaptureActivityAnyOrientation;
 import cl.lillo.produccionmanzanos.Otros.QR;
 
 public class MainActivity extends AppCompatActivity {
+
+    NumberFormat formatter = new DecimalFormat("#0.000");
+    NumberFormat formatter2 = new DecimalFormat("#0");
 
     private TextView lastSync, lastSyncCompleta, lastSyncBins, binsDia, cuadrilla, cantidadTrabajadores, qrbin;
     private ListView listaTrabajadores;
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private GestionPesaje gestionPesaje;
     private GestionTrabajador gestionTrabajador;
     private GestionQRSdia gestionQRSdia;
+    private GestionProducto gestionProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         gestionPesaje = new GestionPesaje(this);
         gestionTrabajador = new GestionTrabajador(this);
         gestionQRSdia = new GestionQRSdia(this);
+        gestionProducto = new GestionProducto(this);
         sync = new Sync();
 
         Bundle bundle = this.getIntent().getExtras();
@@ -253,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 if (listaTrab.size() > 0) {
                     new AlertDialog.Builder(view.getContext())
                             .setTitle("Eliminar trabajador")
-                            .setMessage("¿Desea quitar de la lista al trabajador:\n" + listaTrabajadores.getItemAtPosition(position))
+                            .setMessage("¿Desea quitar de la lista al trabajador:\n" + listaTrabajadores.getItemAtPosition(position) + "?")
                             .setPositiveButton("ELIMINAR", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     listaTrab.remove(position);
@@ -279,6 +291,97 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void insertBin(final View view) {
+        if (!fundo.equals("") && !potrero.equals("") && !sector.equals("") && !variedad.equals("") && !cuartel.equals("") && !qrbin.getText().toString().equals("S/D") && !cantidadTrabajadores.getText().toString().equals("S/D") && !cuadrilla.getText().toString().equals("S/D")) {
+            final Pesaje pesaje = new Pesaje();
+            pesaje.setProducto("25");
+            pesaje.setQRenvase((String) qrbin.getText());
+            //pesaje.setRutTrabajador(txtTrabajador.getText().toString());
+            //rut pesador se debe escanear al iniciar
+            pesaje.setRutPesador(pesador);
+            pesaje.setFundo(fundo);
+            pesaje.setPotrero(potrero);
+            pesaje.setSector(sector);
+            pesaje.setVariedad(variedad);
+            pesaje.setCuartel(cuartel);
+
+            Calendar c = Calendar.getInstance();
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            String dia = "" + day;
+            int month = c.get(Calendar.MONTH) + 1;
+            String mes = "" + month;
+            int year = c.get(Calendar.YEAR);
+
+            if (day < 10)
+                dia = "0" + day;
+            if (month < 10)
+                mes = "0" + mes;
+            String fecha = dia + "/" + mes + "/" + year;
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            String hora = "" + hour;
+            int min = c.get(Calendar.MINUTE);
+            String minu = "" + min;
+            if (hour < 10)
+                hora = "0" + hour;
+            if (min < 10)
+                minu = "0" + min;
+            String horario = hora + ":" + minu;
+
+            pesaje.setFechaHora(fecha + " " + horario);
+            // PESO NETO FIJO TRAIDO DE PRODUCTO, SIN TARA
+            Producto producto = gestionProducto.selectLocal();
+            pesaje.setPesoNeto(producto.getKilosNetoEnvase());
+            pesaje.setTara(0);
+            pesaje.setFormato(producto.getTipoEnvase());
+
+            //CANTIDAD DE PESAJE
+            pesaje.setTotalCantidad(1);
+            pesaje.setFactor(Double.parseDouble(String.valueOf(cantidadTrabajadores.getText())));
+            //formatter con 3 decimales
+            pesaje.setCantidad(Double.parseDouble(formatter.format((1 / Double.parseDouble(String.valueOf(cantidadTrabajadores.getText()))))));
+
+            pesaje.setLectura_SVAL("");
+            pesaje.setID_Map(gestionTablaVista.lastMapeo());
+            pesaje.setTipoRegistro("CELULAR");
+            pesaje.setFechaHoraModificacion("-");
+            pesaje.setUsuarioModificaion(getImei(getApplicationContext()));
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Registrar bin")
+                    .setCancelable(true)
+                    .setMessage("¿Desea registrar el bin " + qrbin.getText() + "\nperteneciente a los " + cantidadTrabajadores.getText() + " trabajadores\nde la cuadrilla: " + cuadrilla.getText() + "?")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //REGISTRAR BIN POR CADA TRABAJADOR
+                            for(String itemLista : listaTrab){
+                                String[] cadena = itemLista.split(",");
+                                String rut = cadena[0];
+                                pesaje.setRutTrabajador(rut);
+                                gestionPesaje.insertLocal(pesaje);
+                                gestionPesaje.insertLocalSync(pesaje);
+                            }
+                            Toast.makeText(view.getContext(), "BIN REGISTRADO", Toast.LENGTH_SHORT).show();
+                            pop();
+                            limpiar();
+                        }
+
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
+
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Atención!")
+                    .setMessage("Complete todos los campos antes de ingresar pesaje")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
+        }
     }
 
     @Override
@@ -338,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                             if (!escaneado) {
-                                listaTrab.add(scanContent + "\t\t\t" + gestionTrabajador.getNombre(scanContent));
+                                listaTrab.add(scanContent + ",\t\t\t" + gestionTrabajador.getNombre(scanContent));
                                 ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaTrab);
                                 listaTrabajadores.setAdapter(adapter);
                                 cantidadTrabajadores.setText(String.valueOf(listaTrab.size()));
@@ -450,12 +553,12 @@ public class MainActivity extends AppCompatActivity {
     public void syncCompleta(View view) {
         if (sync.eventoSyncAll(view.getContext(), true)) {
             contadorTemporalSync = 0;
-            lastSync.setText(getHoraActual());
+            //lastSync.setText(getHoraActual());
             lastSyncCompleta.setText(getHoraActual());
-        }
 
-        ArrayAdapter adapterF = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectFundo());
-        spinFundo.setAdapter(adapterF);
+            ArrayAdapter adapterF = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectFundo());
+            spinFundo.setAdapter(adapterF);
+        }
     }
 
     public void syncBins(View view) {
@@ -466,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //FECHA ACTUAL
+    //HORA ACTUAL
     public String getHoraActual() {
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_MONTH);

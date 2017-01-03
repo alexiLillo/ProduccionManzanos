@@ -38,7 +38,7 @@ public class GestionProducto {
             cv.put("Nombre", producto.getNombre());
             cv.put("TipoEvase", producto.getTipoEnvase());
             cv.put("KilosNetoEnvase", producto.getKilosNetoEnvase());
-            data.insertWithOnConflict("Tara", null, cv, SQLiteDatabase.CONFLICT_IGNORE);
+            data.insertWithOnConflict("Producto", null, cv, SQLiteDatabase.CONFLICT_IGNORE);
             data.close();
             return true;
         } catch (Exception ex) {
@@ -62,6 +62,20 @@ public class GestionProducto {
             Log.w(TAG, "...Error al seleccionar desde tabla Producto: " + ex.getMessage());
         }
         return producto;
+    }
+
+    public Double getPesoNeto() {
+        Double pesoNeto = 0d;
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select KilosNetoEnvase from Producto where ID_Producto = '25'", null);
+            while (cursor.moveToNext()) {
+                pesoNeto = cursor.getDouble(0);
+            }
+        } catch (Exception ex) {
+            Log.w(TAG, "...Error al seleccionar KilosNetoEnvase tabla Producto: " + ex.getMessage());
+        }
+        return pesoNeto;
     }
 
     private boolean deleteLocal() {
