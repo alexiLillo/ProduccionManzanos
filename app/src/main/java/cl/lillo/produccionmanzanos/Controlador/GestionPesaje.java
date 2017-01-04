@@ -287,13 +287,13 @@ public class GestionPesaje {
         return bandera;
     }
 
-    public int cantBandejas(String rut) {
+    public int cantBins(String rut) {
         try {
             SQLiteDatabase data = helper.getReadableDatabase();
-            Cursor cursor = data.rawQuery("select * from Pesaje where RutPesador = '" + rut + "' and FechaHora like '%" + getDateActual() + "%'", null);
+            Cursor cursor = data.rawQuery("select distinct QRenvase from Pesaje where RutPesador = '" + rut + "' and FechaHora like '%" + getDateActual() + "%'", null);
             return cursor.getCount();
         } catch (Exception ex) {
-            Log.w(TAG, "Error al contar cantidad bandejas: " + ex.getMessage());
+            Log.w(TAG, "Error al contar cantidad bins: " + ex.getMessage());
             return 0;
         }
     }

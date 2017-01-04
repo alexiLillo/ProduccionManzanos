@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +39,7 @@ import cl.lillo.produccionmanzanos.Otros.QR;
 
 public class MainActivity extends AppCompatActivity {
 
-    NumberFormat formatter = new DecimalFormat("#0.000");
+    NumberFormat formatter = new DecimalFormat("#0.0000");
     NumberFormat formatter2 = new DecimalFormat("#0");
 
     private TextView lastSync, lastSyncCompleta, lastSyncBins, binsDia, cuadrilla, cantidadTrabajadores, qrbin;
@@ -339,9 +337,9 @@ public class MainActivity extends AppCompatActivity {
             pesaje.setPesoNeto(pesoNeto / cantTrabajadores);
             pesaje.setTara(0);
             pesaje.setFormato(envase);
-            pesaje.setTotalCantidad(Double.parseDouble(formatter.format((1 / cantTrabajadores))));
-            pesaje.setFactor(1);
-            pesaje.setCantidad(1);
+            pesaje.setTotalCantidad(1);
+            pesaje.setFactor(cantTrabajadores);
+            pesaje.setCantidad(Double.parseDouble(formatter.format((1 / cantTrabajadores))));
             pesaje.setLectura_SVAL("");
             pesaje.setID_Map(gestionTablaVista.lastMapeo());
             pesaje.setTipoRegistro("CELULAR");
@@ -362,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
                                 gestionPesaje.insertLocal(pesaje);
                                 gestionPesaje.insertLocalSync(pesaje);
                             }
+                            gestionQRSdia.insertarLocal((String) qrbin.getText());
                             Toast.makeText(view.getContext(), "BIN REGISTRADO", Toast.LENGTH_SHORT).show();
                             pop();
                             limpiar();
@@ -400,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
                 if (qr.getTipoQR().equals("registrar")) {
                     if (qrbin.getText().equals("S/D")) {
                         //VALIDAR QR BIN
-                        if (!qrbin.getText().equals(scanContent)) {
+                        if (!qrbin.getText().equals(scanContent) && !gestionQRSdia.existeLocal(scanContent)) {
                             if (scanContent.startsWith("BIN")) {
                                 qrbin.setText(scanContent);
                                 ok();
@@ -546,6 +545,7 @@ public class MainActivity extends AppCompatActivity {
         listaVacia.add("Ningún trabajador escaneado...");
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaVacia);
         listaTrabajadores.setAdapter(adapter);
+        binsDia.setText(String.valueOf(gestionPesaje.cantBins(pesador)));
     }
 
 
