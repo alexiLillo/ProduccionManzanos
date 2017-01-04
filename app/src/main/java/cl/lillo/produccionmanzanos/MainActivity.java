@@ -332,16 +332,16 @@ public class MainActivity extends AppCompatActivity {
             pesaje.setFechaHora(fecha + " " + horario);
             // PESO NETO FIJO TRAIDO DE PRODUCTO, SIN TARA
             Producto producto = gestionProducto.selectLocal();
-            pesaje.setPesoNeto(producto.getKilosNetoEnvase());
+            double cantTrabajadores = Double.parseDouble(String.valueOf(cantidadTrabajadores.getText()));
+            double pesoNeto = producto.getKilosNetoEnvase();
+            String envase = producto.getTipoEnvase();
+
+            pesaje.setPesoNeto(pesoNeto / cantTrabajadores);
             pesaje.setTara(0);
-            pesaje.setFormato(producto.getTipoEnvase());
-
-            //CANTIDAD DE PESAJE
-            pesaje.setTotalCantidad(1);
-            pesaje.setFactor(Double.parseDouble(String.valueOf(cantidadTrabajadores.getText())));
-            //formatter con 3 decimales
-            pesaje.setCantidad(Double.parseDouble(formatter.format((1 / Double.parseDouble(String.valueOf(cantidadTrabajadores.getText()))))));
-
+            pesaje.setFormato(envase);
+            pesaje.setTotalCantidad(Double.parseDouble(formatter.format((1 / cantTrabajadores))));
+            pesaje.setFactor(1);
+            pesaje.setCantidad(1);
             pesaje.setLectura_SVAL("");
             pesaje.setID_Map(gestionTablaVista.lastMapeo());
             pesaje.setTipoRegistro("CELULAR");
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //REGISTRAR BIN POR CADA TRABAJADOR
-                            for(String itemLista : listaTrab){
+                            for (String itemLista : listaTrab) {
                                 String[] cadena = itemLista.split(",");
                                 String rut = cadena[0];
                                 pesaje.setRutTrabajador(rut);
@@ -612,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sync.eventoSyncPesaje(MainActivity.this, false);
+        //sync.eventoSyncPesaje(MainActivity.this, false);
     }
 
     public static String getImei(Context c) {

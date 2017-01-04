@@ -36,7 +36,7 @@ public class GestionProducto {
             ContentValues cv = new ContentValues();
             cv.put("ID_Producto", producto.getID_Producto());
             cv.put("Nombre", producto.getNombre());
-            cv.put("TipoEvase", producto.getTipoEnvase());
+            cv.put("TipoEnvase", producto.getTipoEnvase());
             cv.put("KilosNetoEnvase", producto.getKilosNetoEnvase());
             data.insertWithOnConflict("Producto", null, cv, SQLiteDatabase.CONFLICT_IGNORE);
             data.close();
@@ -51,12 +51,12 @@ public class GestionProducto {
         Producto producto = new Producto();
         try {
             SQLiteDatabase data = helper.getReadableDatabase();
-            Cursor cursor = data.rawQuery("select * from Producto where ID_Producto = '25'", null);
+            Cursor cursor = data.rawQuery("select * from Producto where ID_Producto='25'", null);
             while (cursor.moveToNext()) {
                 producto.setID_Producto(cursor.getString(0));
                 producto.setNombre(cursor.getString(1));
                 producto.setTipoEnvase(cursor.getString(2));
-                producto.setKilosNetoEnvase(cursor.getDouble(3));
+                producto.setKilosNetoEnvase(cursor.getFloat(3));
             }
         } catch (Exception ex) {
             Log.w(TAG, "...Error al seleccionar desde tabla Producto: " + ex.getMessage());
@@ -64,13 +64,13 @@ public class GestionProducto {
         return producto;
     }
 
-    public Double getPesoNeto() {
-        Double pesoNeto = 0d;
+    public float getPesoNeto() {
+        float pesoNeto = 0;
         try {
             SQLiteDatabase data = helper.getReadableDatabase();
             Cursor cursor = data.rawQuery("select KilosNetoEnvase from Producto where ID_Producto = '25'", null);
             while (cursor.moveToNext()) {
-                pesoNeto = cursor.getDouble(0);
+                pesoNeto = cursor.getFloat(0);
             }
         } catch (Exception ex) {
             Log.w(TAG, "...Error al seleccionar KilosNetoEnvase tabla Producto: " + ex.getMessage());
@@ -105,7 +105,7 @@ public class GestionProducto {
                     producto.setID_Producto(rs.getString("ID_Producto"));
                     producto.setNombre(rs.getString("Nombre"));
                     producto.setTipoEnvase(rs.getString("TipoEnvase"));
-                    producto.setKilosNetoEnvase(rs.getDouble("KilosNetoEnvase"));
+                    producto.setKilosNetoEnvase(rs.getFloat("KilosNetoEnvase"));
 
                     insertLocal(producto);
                 }

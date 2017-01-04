@@ -5,11 +5,12 @@ package cl.lillo.produccionmanzanos.Modelo;
  */
 
 public class Producto {
+    private static Producto instance;
 
     private String ID_Producto;
     private String Nombre;
     private String TipoEnvase;
-    private double KilosNetoEnvase;
+    private float KilosNetoEnvase;
 
     public Producto() {
     }
@@ -22,11 +23,11 @@ public class Producto {
         this.ID_Producto = ID_Producto;
     }
 
-    public double getKilosNetoEnvase() {
+    public float getKilosNetoEnvase() {
         return KilosNetoEnvase;
     }
 
-    public void setKilosNetoEnvase(double kilosNetoEnvase) {
+    public void setKilosNetoEnvase(float kilosNetoEnvase) {
         KilosNetoEnvase = kilosNetoEnvase;
     }
 
@@ -44,5 +45,13 @@ public class Producto {
 
     public void setTipoEnvase(String tipoEnvase) {
         TipoEnvase = tipoEnvase;
+    }
+
+    //auto-instancia (creo)
+    public static synchronized Producto getInstance() {
+        if (instance == null) {
+            instance = new Producto();
+        }
+        return instance;
     }
 }
