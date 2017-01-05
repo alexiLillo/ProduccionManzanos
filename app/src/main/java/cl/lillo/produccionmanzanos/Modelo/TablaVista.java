@@ -19,12 +19,32 @@ public class TablaVista {
     private String nombreCuartel;
     private int ID_Mapeo;
     private String ID_Producto;
+    private String TipoEnvase;
+    private float KilosNetoEnvase;
 
     //constructor
     public TablaVista() {
     }
 
     //getter setter
+
+
+    public float getKilosNetoEnvase() {
+        return KilosNetoEnvase;
+    }
+
+    public void setKilosNetoEnvase(float kilosNetoEnvase) {
+        KilosNetoEnvase = kilosNetoEnvase;
+    }
+
+    public String getTipoEnvase() {
+        return TipoEnvase;
+    }
+
+    public void setTipoEnvase(String tipoEnvase) {
+        TipoEnvase = tipoEnvase;
+    }
+
     public String getID_Cuartel() {
         return ID_Cuartel;
     }

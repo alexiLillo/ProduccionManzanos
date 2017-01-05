@@ -46,6 +46,8 @@ public class GestionTablaVista {
             cv.put("nombreCuartel", tablaVista.getNombreCuartel());
             cv.put("ID_Mapeo", tablaVista.getID_Mapeo());
             cv.put("id_Producto", tablaVista.getID_Producto());
+            cv.put("TipoEnvase", tablaVista.getTipoEnvase());
+            cv.put("KilosNetoEnvase", tablaVista.getKilosNetoEnvase());
             data.insertWithOnConflict("TablaVista", null, cv, SQLiteDatabase.CONFLICT_IGNORE);
             data.close();
             return true;
@@ -74,7 +76,6 @@ public class GestionTablaVista {
                 return false;
             } else if (deleteLocal()) {
                 //Consulta SQL
-                //ID_Producto = '25' para manzanos
                 String query = "select * from VistaApkPesaje where ID_Producto = '25'";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -92,6 +93,8 @@ public class GestionTablaVista {
                     tablaVista.setNombreCuartel(rs.getString("nombreCuartel"));
                     tablaVista.setID_Mapeo(rs.getInt("ID_Mapeo"));
                     tablaVista.setID_Producto(rs.getString("ID_Producto"));
+                    tablaVista.setTipoEnvase(rs.getString("TipoEnvase"));
+                    tablaVista.setKilosNetoEnvase(rs.getFloat("KilosNetoEnvase"));
 
                     insertLocal(tablaVista);
                 }
@@ -195,6 +198,35 @@ public class GestionTablaVista {
             Log.w(TAG, "...Error al seleccionar Cuartel de TablaVista: " + ex.getMessage());
         }
         return lista;
+    }
+
+    public String getTipoEnvase() {
+        String tipoEnvase = "";
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select distinct TipoEnvase from TablaVista where ID_Producto = '25'", null);
+            while (cursor.moveToNext()) {
+                tipoEnvase = cursor.getString(0);
+            }
+            data.close();
+        } catch (Exception ex) {
+            Log.w(TAG, "...Error al seleccionar ENVASE de TablaVista: " + ex.getMessage());
+        }
+        return tipoEnvase;
+    }
+
+    public float getPesoNeto(String nombreVariedad) {
+        float pesoNeto = 0;
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select KilosNetoEnvase from TablaVista where ID_Producto = '25' and nombreVariedad = '" + nombreVariedad + "'", null);
+            while (cursor.moveToNext()) {
+                pesoNeto = cursor.getFloat(0);
+            }
+        } catch (Exception ex) {
+            Log.w(TAG, "...Error al seleccionar KilosNetoEnvase tabla TablaVista: " + ex.getMessage());
+        }
+        return pesoNeto;
     }
 
     public int lastMapeo() {

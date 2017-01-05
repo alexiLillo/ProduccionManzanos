@@ -256,12 +256,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/btMasBins"
+                                    android:onClick="addBin"
+                                    android:layout_width="30dp"
+                                    android:layout_height="33dp"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@android:drawable/ic_input_add"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="QR bin: "
+                                    android:text="BIN: "
                                     android:textSize="18sp" />
 
                                 <TextView
@@ -277,6 +286,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
+                                android:layout_gravity="center"
                                 android:layout_weight="1">
 
                                 <TextView

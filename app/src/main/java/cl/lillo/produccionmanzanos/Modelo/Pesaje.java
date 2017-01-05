@@ -9,6 +9,7 @@ public class Pesaje {
     //datos
     private String Producto;
     private String QRenvase;
+    private String Cuadrilla;
     private String RutTrabajador;
     private String RutPesador;
     private String Fundo;
@@ -34,6 +35,16 @@ public class Pesaje {
     }
 
     //getter setter
+
+
+    public String getCuadrilla() {
+        return Cuadrilla;
+    }
+
+    public void setCuadrilla(String cuadrilla) {
+        Cuadrilla = cuadrilla;
+    }
+
     public double getCantidad() {
         return Cantidad;
     }

@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     private String cuartel = "";
     private String variedad = "";
     private String pesador = "";
-    private int contadorTemporalSync = 0;
 
     private ArrayList<String> listaTrab = new ArrayList<>();
+    private ArrayList<String> listaBins = new ArrayList<>();
 
     //Gestiones
     private Sync sync;
@@ -291,13 +291,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void insertBin(final View view) {
+    public void registrarBin(final ArrayList<String> qrBin) {
         if (!fundo.equals("") && !potrero.equals("") && !sector.equals("") && !variedad.equals("") && !cuartel.equals("") && !qrbin.getText().toString().equals("S/D") && !cantidadTrabajadores.getText().toString().equals("S/D") && !cuadrilla.getText().toString().equals("S/D")) {
             final Pesaje pesaje = new Pesaje();
             pesaje.setProducto("25");
-            pesaje.setQRenvase((String) qrbin.getText());
+            //pesaje.setQRenvase(qrBin);
             //pesaje.setRutTrabajador(txtTrabajador.getText().toString());
             //rut pesador se debe escanear al iniciar
+            pesaje.setCuadrilla((String) cuadrilla.getText());
             pesaje.setRutPesador(pesador);
             pesaje.setFundo(fundo);
             pesaje.setPotrero(potrero);
@@ -329,10 +330,14 @@ public class MainActivity extends AppCompatActivity {
 
             pesaje.setFechaHora(fecha + " " + horario);
             // PESO NETO FIJO TRAIDO DE PRODUCTO, SIN TARA
-            Producto producto = gestionProducto.selectLocal();
             double cantTrabajadores = Double.parseDouble(String.valueOf(cantidadTrabajadores.getText()));
-            double pesoNeto = producto.getKilosNetoEnvase();
-            String envase = producto.getTipoEnvase();
+
+            //rescatar nombre variedad
+            String cadena[] = spinVariedad.getSelectedItem().toString().split(" ");
+            String nombreVariedad = cadena[0];
+
+            double pesoNeto = gestionTablaVista.getPesoNeto(nombreVariedad);
+            String envase = gestionTablaVista.getTipoEnvase();
 
             pesaje.setPesoNeto(pesoNeto / cantTrabajadores);
             pesaje.setTara(0);
@@ -347,25 +352,27 @@ public class MainActivity extends AppCompatActivity {
             pesaje.setUsuarioModificaion(getImei(getApplicationContext()));
 
             new AlertDialog.Builder(this)
-                    .setTitle("Registrar bin")
+                    .setTitle("Registrar bins")
                     .setCancelable(true)
-                    .setMessage("¿Desea registrar el bin " + qrbin.getText() + "\nperteneciente a los " + cantidadTrabajadores.getText() + " trabajadores\nde la cuadrilla: " + cuadrilla.getText() + "?")
+                    .setMessage("¿Desea registrar: " + qrbin.getText() + "\nperteneciente a los " + cantidadTrabajadores.getText() + " trabajadores\nde la cuadrilla: " + cuadrilla.getText() + "?")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            //REGISTRAR BIN POR CADA TRABAJADOR
-                            for (String itemLista : listaTrab) {
-                                String[] cadena = itemLista.split(",");
-                                String rut = cadena[0];
-                                pesaje.setRutTrabajador(rut);
-                                gestionPesaje.insertLocal(pesaje);
-                                gestionPesaje.insertLocalSync(pesaje);
+                            for (String bin : qrBin) {
+                                pesaje.setQRenvase(bin);
+                                gestionQRSdia.insertarLocal(bin);
+                                //REGISTRAR BIN POR CADA TRABAJADOR
+                                for (String itemLista : listaTrab) {
+                                    String[] cadena = itemLista.split(",");
+                                    String rut = cadena[0];
+                                    pesaje.setRutTrabajador(rut);
+                                    gestionPesaje.insertLocal(pesaje);
+                                    gestionPesaje.insertLocalSync(pesaje);
+                                }
                             }
-                            gestionQRSdia.insertarLocal((String) qrbin.getText());
-                            Toast.makeText(view.getContext(), "BIN REGISTRADO", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "DATOS REGISTRADOS", Toast.LENGTH_SHORT).show();
                             pop();
                             limpiar();
                         }
-
                     })
                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -375,12 +382,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             new AlertDialog.Builder(this)
                     .setTitle("Atención!")
-                    .setMessage("Complete todos los campos antes de ingresar pesaje")
+                    .setMessage("Complete todos los campos antes de registrar bin")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     }).show();
         }
+    }
+
+    public void insertBin(final View view) {
+        registrarBin(listaBins);
     }
 
     @Override
@@ -402,6 +413,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!qrbin.getText().equals(scanContent) && !gestionQRSdia.existeLocal(scanContent)) {
                             if (scanContent.startsWith("BIN")) {
                                 qrbin.setText(scanContent);
+                                listaBins.add(scanContent);
                                 ok();
                                 scanBin("ESCANEAR QR CUADRILLA");
                             } else {
@@ -459,6 +471,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else if (qr.getTipoQR().equals("consultar")) {
 
+                } else if (qr.getTipoQR().equals("addbins")) {
+                    if (!qrbin.getText().equals(scanContent) && !gestionQRSdia.existeLocal(scanContent)) {
+                        if (scanContent.startsWith("BIN")) {
+                            boolean noescaneado = true;
+                            for (String qrbin : listaBins) {
+                                if (qrbin.equals(scanContent)) {
+                                    noescaneado = false;
+                                    break;
+                                }
+                            }
+                            if (noescaneado) {
+                                listaBins.add(scanContent);
+                                ok();
+                                qrbin.setText(listaBins.size() + " bins");
+                            } else {
+                                Toast.makeText(this, "CODIGO DE BIN YA LEIDO", Toast.LENGTH_SHORT).show();
+                                error();
+                                qrIntent("addbins", "ESCANEAR OTRO BIN");
+                            }
+                        } else {
+                            Toast.makeText(this, "CODIGO DE BIN INVALIDO", Toast.LENGTH_SHORT).show();
+                            error();
+                            qrIntent("addbins", "ESCANEAR OTRO BIN");
+                        }
+                    } else {
+                        Toast.makeText(this, "CODIGO DE BIN YA LEIDO", Toast.LENGTH_SHORT).show();
+                        error();
+                        qrIntent("addbins", "ESCANEAR OTRO BIN");
+                    }
                 }
             } else {
                 //Toast.makeText(this, "No se escanearon datos", Toast.LENGTH_SHORT).show();
@@ -467,6 +508,22 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No se escanearon datos", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void addBin(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Agregar bin")
+                .setCancelable(true)
+                .setMessage("¿Desea agregar otro bin a este registro?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        qrIntent("addbins", "ESCANEAR OTRO BIN");
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
     }
 
     public void scanButton(View view) {
@@ -546,13 +603,14 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaVacia);
         listaTrabajadores.setAdapter(adapter);
         binsDia.setText(String.valueOf(gestionPesaje.cantBins(pesador)));
+
+        listaBins.clear();
     }
 
 
     //SINCRONIZACION
     public void syncCompleta(View view) {
         if (sync.eventoSyncAll(view.getContext(), true)) {
-            contadorTemporalSync = 0;
             //lastSync.setText(getHoraActual());
             lastSyncCompleta.setText(getHoraActual());
 
@@ -563,7 +621,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void syncBins(View view) {
         if (sync.eventoSyncPesaje(view.getContext(), false)) {
-            contadorTemporalSync = 0;
             lastSync.setText(getHoraActual());
             lastSyncBins.setText(getHoraActual());
         }

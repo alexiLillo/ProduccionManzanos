@@ -39,6 +39,7 @@ public class GestionPesaje {
             ContentValues cv = new ContentValues();
             cv.put("Producto", pesaje.getProducto());
             cv.put("QRenvase", pesaje.getQRenvase());
+            cv.put("Cuadrilla", pesaje.getQRenvase());
             cv.put("RutTrabajador", pesaje.getRutTrabajador());
             cv.put("RutPesador", pesaje.getRutPesador());
             cv.put("Fundo", pesaje.getFundo());
@@ -73,6 +74,7 @@ public class GestionPesaje {
             ContentValues cv = new ContentValues();
             cv.put("Producto", pesaje.getProducto());
             cv.put("QRenvase", pesaje.getQRenvase());
+            cv.put("Cuadrilla", pesaje.getQRenvase());
             cv.put("RutTrabajador", pesaje.getRutTrabajador());
             cv.put("RutPesador", pesaje.getRutPesador());
             cv.put("Fundo", pesaje.getFundo());
@@ -111,25 +113,26 @@ public class GestionPesaje {
                 Pesaje pesaje = new Pesaje();
                 pesaje.setProducto(cursor.getString(0));
                 pesaje.setQRenvase(cursor.getString(1));
-                pesaje.setRutTrabajador(cursor.getString(2));
-                pesaje.setRutPesador(cursor.getString(3));
-                pesaje.setFundo(cursor.getString(4));
-                pesaje.setPotrero(cursor.getString(5));
-                pesaje.setSector(cursor.getString(6));
-                pesaje.setVariedad(cursor.getString(7));
-                pesaje.setCuartel(cursor.getString(8));
-                pesaje.setFechaHora(cursor.getString(9));
-                pesaje.setPesoNeto(cursor.getDouble(10));
-                pesaje.setTara(cursor.getDouble(11));
-                pesaje.setFormato(cursor.getString(12));
-                pesaje.setTotalCantidad(cursor.getDouble(13));
-                pesaje.setFactor(cursor.getDouble(14));
-                pesaje.setCantidad(cursor.getDouble(15));
-                pesaje.setLectura_SVAL(cursor.getString(16));
-                pesaje.setID_Map(cursor.getInt(17));
-                pesaje.setTipoRegistro(cursor.getString(18));
-                pesaje.setFechaHoraModificacion(cursor.getString(19));
-                pesaje.setUsuarioModificaion(cursor.getString(20));
+                pesaje.setCuadrilla(cursor.getString(2));
+                pesaje.setRutTrabajador(cursor.getString(3));
+                pesaje.setRutPesador(cursor.getString(4));
+                pesaje.setFundo(cursor.getString(5));
+                pesaje.setPotrero(cursor.getString(6));
+                pesaje.setSector(cursor.getString(7));
+                pesaje.setVariedad(cursor.getString(8));
+                pesaje.setCuartel(cursor.getString(9));
+                pesaje.setFechaHora(cursor.getString(10));
+                pesaje.setPesoNeto(cursor.getDouble(11));
+                pesaje.setTara(cursor.getDouble(12));
+                pesaje.setFormato(cursor.getString(13));
+                pesaje.setTotalCantidad(cursor.getDouble(14));
+                pesaje.setFactor(cursor.getDouble(15));
+                pesaje.setCantidad(cursor.getDouble(16));
+                pesaje.setLectura_SVAL(cursor.getString(17));
+                pesaje.setID_Map(cursor.getInt(18));
+                pesaje.setTipoRegistro(cursor.getString(19));
+                pesaje.setFechaHoraModificacion(cursor.getString(20));
+                pesaje.setUsuarioModificaion(cursor.getString(21));
                 listaPesajes.add(pesaje);
             }
             data.close();
@@ -149,25 +152,26 @@ public class GestionPesaje {
                 Pesaje pesaje = new Pesaje();
                 pesaje.setProducto(cursor.getString(0));
                 pesaje.setQRenvase(cursor.getString(1));
-                pesaje.setRutTrabajador(cursor.getString(2));
-                pesaje.setRutPesador(cursor.getString(3));
-                pesaje.setFundo(cursor.getString(4));
-                pesaje.setPotrero(cursor.getString(5));
-                pesaje.setSector(cursor.getString(6));
-                pesaje.setVariedad(cursor.getString(7));
-                pesaje.setCuartel(cursor.getString(8));
-                pesaje.setFechaHora(cursor.getString(9));
-                pesaje.setPesoNeto(cursor.getDouble(10));
-                pesaje.setTara(cursor.getDouble(11));
-                pesaje.setFormato(cursor.getString(12));
-                pesaje.setTotalCantidad(cursor.getDouble(13));
-                pesaje.setFactor(cursor.getDouble(14));
-                pesaje.setCantidad(cursor.getDouble(15));
-                pesaje.setLectura_SVAL(cursor.getString(16));
-                pesaje.setID_Map(cursor.getInt(17));
-                pesaje.setTipoRegistro(cursor.getString(18));
-                pesaje.setFechaHoraModificacion(cursor.getString(19));
-                pesaje.setUsuarioModificaion(cursor.getString(20));
+                pesaje.setCuadrilla(cursor.getString(2));
+                pesaje.setRutTrabajador(cursor.getString(3));
+                pesaje.setRutPesador(cursor.getString(4));
+                pesaje.setFundo(cursor.getString(5));
+                pesaje.setPotrero(cursor.getString(6));
+                pesaje.setSector(cursor.getString(7));
+                pesaje.setVariedad(cursor.getString(8));
+                pesaje.setCuartel(cursor.getString(9));
+                pesaje.setFechaHora(cursor.getString(10));
+                pesaje.setPesoNeto(cursor.getDouble(11));
+                pesaje.setTara(cursor.getDouble(12));
+                pesaje.setFormato(cursor.getString(13));
+                pesaje.setTotalCantidad(cursor.getDouble(14));
+                pesaje.setFactor(cursor.getDouble(15));
+                pesaje.setCantidad(cursor.getDouble(16));
+                pesaje.setLectura_SVAL(cursor.getString(17));
+                pesaje.setID_Map(cursor.getInt(18));
+                pesaje.setTipoRegistro(cursor.getString(19));
+                pesaje.setFechaHoraModificacion(cursor.getString(20));
+                pesaje.setUsuarioModificaion(cursor.getString(21));
                 listaPesajes.add(pesaje);
             }
             data.close();
@@ -227,7 +231,7 @@ public class GestionPesaje {
                     //return guardado;
                 } else {
                     //Consulta SQL
-                    String query = "insert into Pesaje values ('" + p.getProducto() + "', '" + p.getQRenvase() + "', '" + p.getRutTrabajador() + "', '" + p.getRutPesador() + "', '" + p.getFundo() + "', '" + p.getPotrero() + "', '" + p.getSector() + "', '" + p.getVariedad() + "', '" + p.getCuartel() + "', '" + p.getFechaHora() + "', " + p.getPesoNeto() + ", " + p.getTara() + ", '" + p.getFormato() + "', " + p.getTotalCantidad() + ", " + p.getFactor() + ", " + p.getCantidad() + ", '" + p.getLectura_SVAL() + "', " + p.getID_Map() + ", '" + p.getTipoRegistro() + "', '" + p.getFechaHoraModificacion() + "', '" + p.getUsuarioModificaion() + "')";
+                    String query = "insert into Pesaje values ('" + p.getProducto() + "', '" + p.getQRenvase() + "', '" + p.getCuadrilla() + "', '" + p.getRutTrabajador() + "', '" + p.getRutPesador() + "', '" + p.getFundo() + "', '" + p.getPotrero() + "', '" + p.getSector() + "', '" + p.getVariedad() + "', '" + p.getCuartel() + "', '" + p.getFechaHora() + "', " + p.getPesoNeto() + ", " + p.getTara() + ", '" + p.getFormato() + "', " + p.getTotalCantidad() + ", " + p.getFactor() + ", " + p.getCantidad() + ", '" + p.getLectura_SVAL() + "', " + p.getID_Map() + ", '" + p.getTipoRegistro() + "', '" + p.getFechaHoraModificacion() + "', '" + p.getUsuarioModificaion() + "')";
                     Statement stmt = con.createStatement();
                     //executeUpdate devuelve el número de rows afectadas
                     if (stmt.executeUpdate(query) > 0) {
@@ -256,7 +260,7 @@ public class GestionPesaje {
                     return false;
                 } else {
                     //Consulta SQL
-                    String query = "insert into PesajeTest values ('" + p.getProducto() + "', '" + p.getQRenvase() + "', '" + p.getRutTrabajador() + "', '" + p.getRutPesador() + "', '" + p.getFundo() + "', '" + p.getPotrero() + "', '" + p.getSector() + "', '" + p.getVariedad() + "', '" + p.getCuartel() + "', '" + p.getFechaHora() + "', " + p.getPesoNeto() + ", " + p.getTara() + ", '" + p.getFormato() + "', " + p.getTotalCantidad() + ", " + p.getFactor() + ", " + p.getCantidad() + ", '" + p.getLectura_SVAL() + "', " + p.getID_Map() + ", '" + p.getTipoRegistro() + "', '" + p.getFechaHoraModificacion() + "', '" + p.getUsuarioModificaion() + "')";
+                    String query = "insert into PesajeTest values ('" + p.getProducto() + "', '" + p.getQRenvase() + "', '" + p.getCuadrilla() + "', '" + p.getRutTrabajador() + "', '" + p.getRutPesador() + "', '" + p.getFundo() + "', '" + p.getPotrero() + "', '" + p.getSector() + "', '" + p.getVariedad() + "', '" + p.getCuartel() + "', '" + p.getFechaHora() + "', " + p.getPesoNeto() + ", " + p.getTara() + ", '" + p.getFormato() + "', " + p.getTotalCantidad() + ", " + p.getFactor() + ", " + p.getCantidad() + ", '" + p.getLectura_SVAL() + "', " + p.getID_Map() + ", '" + p.getTipoRegistro() + "', '" + p.getFechaHoraModificacion() + "', '" + p.getUsuarioModificaion() + "')";
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate(query);
                     con.close();
