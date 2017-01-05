@@ -727,7 +727,7 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/txtBandejasDia"
+                                android:id="@+id/txtBinsDiaTrabajador"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="S/D"
@@ -756,7 +756,7 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/txtBandejasTotal"
+                                android:id="@+id/txtBinsMesTrabajador"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="S/D"

@@ -33,7 +33,6 @@ import cl.lillo.produccionmanzanos.Controlador.GestionTablaVista;
 import cl.lillo.produccionmanzanos.Controlador.GestionTrabajador;
 import cl.lillo.produccionmanzanos.Controlador.Sync;
 import cl.lillo.produccionmanzanos.Modelo.Pesaje;
-import cl.lillo.produccionmanzanos.Modelo.Producto;
 import cl.lillo.produccionmanzanos.Otros.CaptureActivityAnyOrientation;
 import cl.lillo.produccionmanzanos.Otros.QR;
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     NumberFormat formatter = new DecimalFormat("#0.0000");
     NumberFormat formatter2 = new DecimalFormat("#0");
 
-    private TextView lastSync, lastSyncCompleta, lastSyncBins, binsDia, cuadrilla, cantidadTrabajadores, qrbin;
+    private TextView lastSync, lastSyncCompleta, lastSyncBins, binsDia, cuadrilla, cantidadTrabajadores, qrbin, txtBinsDiaTrabajador, txtBinsMesTrabajador, txtTrabajadorCosulta;
     private ListView listaTrabajadores;
 
     private Spinner spinFundo, spinPotrero, spinSector, spinVariedad, spinCuartel;
@@ -85,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         spinSector = (Spinner) findViewById(R.id.spinSector);
         spinVariedad = (Spinner) findViewById(R.id.spinVariedad);
         spinCuartel = (Spinner) findViewById(R.id.spinCuartel);
+        txtBinsDiaTrabajador = (TextView) findViewById(R.id.txtBinsDiaTrabajador);
+        txtBinsMesTrabajador = (TextView) findViewById(R.id.txtBinsMesTrabajador);
+        txtTrabajadorCosulta = (TextView) findViewById(R.id.txtTrabajadorConsulta);
 
         gestionTablaVista = new GestionTablaVista(this);
         gestionPesaje = new GestionPesaje(this);
@@ -470,7 +472,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 } else if (qr.getTipoQR().equals("consultar")) {
-
+                    if (gestionTrabajador.existe(scanContent)) {
+                        txtTrabajadorCosulta.setText(gestionTrabajador.getNombre(scanContent));
+                        txtBinsDiaTrabajador.setText(String.valueOf(gestionPesaje.binsDiaTrabajador(scanContent)));
+                        txtBinsMesTrabajador.setText(String.valueOf(gestionPesaje.binsMesTrabajador(scanContent)));
+                        pop();
+                    }else {
+                        Toast.makeText(this, "CODIGO DE TRABAJADOR INVALIDO", Toast.LENGTH_SHORT).show();
+                        error();
+                        qrIntent("consultar", "CONSULTAR POR QR DE TRABAJADOR");
+                    }
                 } else if (qr.getTipoQR().equals("addbins")) {
                     if (!qrbin.getText().equals(scanContent) && !gestionQRSdia.existeLocal(scanContent)) {
                         if (scanContent.startsWith("BIN")) {

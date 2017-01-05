@@ -302,6 +302,36 @@ public class GestionPesaje {
         }
     }
 
+    public double binsDiaTrabajador(String rut) {
+        double bins = 0;
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select Cantidad from Pesaje where RutTrabajador = '" + rut + "' and FechaHora like '%" + getDateActual() + "%'", null);
+            while (cursor.moveToNext()) {
+                bins += cursor.getDouble(0);
+            }
+        } catch (Exception ex) {
+            Log.w(TAG, "Error al contar cantidad bins: " + ex.getMessage());
+            return 0;
+        }
+        return bins;
+    }
+
+    public double binsMesTrabajador(String rut) {
+        double bins = 0;
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select Cantidad from Pesaje where RutTrabajador = '" + rut + "' and FechaHora > '%" + getMesActual() + "%'", null);
+            while (cursor.moveToNext()) {
+                bins += cursor.getDouble(0);
+            }
+        } catch (Exception ex) {
+            Log.w(TAG, "Error al contar cantidad bins: " + ex.getMessage());
+            return 0;
+        }
+        return bins;
+    }
+
     private String getDateActualmmddyyyy() {
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -331,6 +361,31 @@ public class GestionPesaje {
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_MONTH);
         String dia = "" + day;
+        int month = c.get(Calendar.MONTH) + 1;
+        String mes = "" + month;
+        int year = c.get(Calendar.YEAR);
+        if (day < 10)
+            dia = "0" + day;
+        if (month < 10)
+            mes = "0" + mes;
+        String fecha = dia + "/" + mes + "/" + year;
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        String hora = "" + hour;
+        int min = c.get(Calendar.MINUTE);
+        String minu = "" + min;
+        if (hour < 10)
+            hora = "0" + hour;
+        if (min < 10)
+            minu = "0" + min;
+        String horario = hora + ":" + minu;
+
+        return fecha;
+    }
+
+    public String getMesActual() {
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        String dia = "" + 1;
         int month = c.get(Calendar.MONTH) + 1;
         String mes = "" + month;
         int year = c.get(Calendar.YEAR);
