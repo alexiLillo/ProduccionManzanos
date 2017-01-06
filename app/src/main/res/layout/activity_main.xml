@@ -766,6 +766,12 @@ Tenga en cuenta que la sincronización puede tardar unos minutos." />
 
                     </LinearLayout>
 
+                    <TextView
+                        android:padding="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Las consultas realizadas en este módulo son sólo locales, es decir, sólo se muestra la información que se a registrado en este dispositivo."/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

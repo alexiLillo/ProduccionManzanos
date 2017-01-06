@@ -39,7 +39,7 @@ import cl.lillo.produccionmanzanos.Otros.QR;
 public class MainActivity extends AppCompatActivity {
 
     NumberFormat formatter = new DecimalFormat("#0.0000");
-    NumberFormat formatter2 = new DecimalFormat("#0");
+    NumberFormat formatter2 = new DecimalFormat("#0.0");
 
     private TextView lastSync, lastSyncCompleta, lastSyncBins, binsDia, cuadrilla, cantidadTrabajadores, qrbin, txtBinsDiaTrabajador, txtBinsMesTrabajador, txtTrabajadorCosulta;
     private ListView listaTrabajadores;
@@ -474,8 +474,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (qr.getTipoQR().equals("consultar")) {
                     if (gestionTrabajador.existe(scanContent)) {
                         txtTrabajadorCosulta.setText(gestionTrabajador.getNombre(scanContent));
-                        txtBinsDiaTrabajador.setText(String.valueOf(gestionPesaje.binsDiaTrabajador(scanContent)));
-                        txtBinsMesTrabajador.setText(String.valueOf(gestionPesaje.binsMesTrabajador(scanContent)));
+                        String dia = formatter2.format(gestionPesaje.binsDiaTrabajador(scanContent));
+                        String mes = formatter2.format(gestionPesaje.binsMesTrabajador(scanContent));
+                        txtBinsDiaTrabajador.setText(dia);
+                        txtBinsMesTrabajador.setText(mes);
                         pop();
                     }else {
                         Toast.makeText(this, "CODIGO DE TRABAJADOR INVALIDO", Toast.LENGTH_SHORT).show();
@@ -616,6 +618,10 @@ public class MainActivity extends AppCompatActivity {
         binsDia.setText(String.valueOf(gestionPesaje.cantBins(pesador)));
 
         listaBins.clear();
+
+        txtTrabajadorCosulta.setText("S/D");
+        txtBinsDiaTrabajador.setText("S/D");
+        txtBinsMesTrabajador.setText("S/D");
     }
 
 
