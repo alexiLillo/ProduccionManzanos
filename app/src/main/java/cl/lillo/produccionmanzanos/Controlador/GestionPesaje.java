@@ -39,7 +39,7 @@ public class GestionPesaje {
             ContentValues cv = new ContentValues();
             cv.put("Producto", pesaje.getProducto());
             cv.put("QRenvase", pesaje.getQRenvase());
-            cv.put("Cuadrilla", pesaje.getQRenvase());
+            cv.put("Cuadrilla", pesaje.getCuadrilla());
             cv.put("RutTrabajador", pesaje.getRutTrabajador());
             cv.put("RutPesador", pesaje.getRutPesador());
             cv.put("Fundo", pesaje.getFundo());
@@ -74,7 +74,7 @@ public class GestionPesaje {
             ContentValues cv = new ContentValues();
             cv.put("Producto", pesaje.getProducto());
             cv.put("QRenvase", pesaje.getQRenvase());
-            cv.put("Cuadrilla", pesaje.getQRenvase());
+            cv.put("Cuadrilla", pesaje.getCuadrilla());
             cv.put("RutTrabajador", pesaje.getRutTrabajador());
             cv.put("RutPesador", pesaje.getRutPesador());
             cv.put("Fundo", pesaje.getFundo());
