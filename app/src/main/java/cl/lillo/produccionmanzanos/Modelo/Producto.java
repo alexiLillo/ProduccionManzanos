@@ -9,8 +9,6 @@ public class Producto {
 
     private String ID_Producto;
     private String Nombre;
-    private String TipoEnvase;
-    private float KilosNetoEnvase;
 
     public Producto() {
     }
@@ -23,28 +21,12 @@ public class Producto {
         this.ID_Producto = ID_Producto;
     }
 
-    public float getKilosNetoEnvase() {
-        return KilosNetoEnvase;
-    }
-
-    public void setKilosNetoEnvase(float kilosNetoEnvase) {
-        KilosNetoEnvase = kilosNetoEnvase;
-    }
-
     public String getNombre() {
         return Nombre;
     }
 
     public void setNombre(String nombre) {
         Nombre = nombre;
-    }
-
-    public String getTipoEnvase() {
-        return TipoEnvase;
-    }
-
-    public void setTipoEnvase(String tipoEnvase) {
-        TipoEnvase = tipoEnvase;
     }
 
     //auto-instancia (creo)

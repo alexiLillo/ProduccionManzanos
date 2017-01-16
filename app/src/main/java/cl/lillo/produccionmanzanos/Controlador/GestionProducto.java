@@ -36,8 +36,6 @@ public class GestionProducto {
             ContentValues cv = new ContentValues();
             cv.put("ID_Producto", producto.getID_Producto());
             cv.put("Nombre", producto.getNombre());
-            cv.put("TipoEnvase", producto.getTipoEnvase());
-            cv.put("KilosNetoEnvase", producto.getKilosNetoEnvase());
             data.insertWithOnConflict("Producto", null, cv, SQLiteDatabase.CONFLICT_IGNORE);
             data.close();
             return true;
@@ -55,27 +53,11 @@ public class GestionProducto {
             while (cursor.moveToNext()) {
                 producto.setID_Producto(cursor.getString(0));
                 producto.setNombre(cursor.getString(1));
-                producto.setTipoEnvase(cursor.getString(2));
-                producto.setKilosNetoEnvase(cursor.getFloat(3));
             }
         } catch (Exception ex) {
             Log.w(TAG, "...Error al seleccionar desde tabla Producto: " + ex.getMessage());
         }
         return producto;
-    }
-
-    public float getPesoNeto() {
-        float pesoNeto = 0;
-        try {
-            SQLiteDatabase data = helper.getReadableDatabase();
-            Cursor cursor = data.rawQuery("select KilosNetoEnvase from Producto where ID_Producto = '25'", null);
-            while (cursor.moveToNext()) {
-                pesoNeto = cursor.getFloat(0);
-            }
-        } catch (Exception ex) {
-            Log.w(TAG, "...Error al seleccionar KilosNetoEnvase tabla Producto: " + ex.getMessage());
-        }
-        return pesoNeto;
     }
 
     private boolean deleteLocal() {
@@ -104,8 +86,6 @@ public class GestionProducto {
                     Producto producto = new Producto();
                     producto.setID_Producto(rs.getString("ID_Producto"));
                     producto.setNombre(rs.getString("Nombre"));
-                    producto.setTipoEnvase(rs.getString("TipoEnvase"));
-                    producto.setKilosNetoEnvase(rs.getFloat("KilosNetoEnvase"));
 
                     insertLocal(producto);
                 }
