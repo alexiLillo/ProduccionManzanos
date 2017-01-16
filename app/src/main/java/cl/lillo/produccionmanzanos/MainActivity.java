@@ -335,10 +335,11 @@ public class MainActivity extends AppCompatActivity {
             double cantTrabajadores = Double.parseDouble(String.valueOf(cantidadTrabajadores.getText()));
 
             //rescatar nombre variedad
-            String cadena[] = spinVariedad.getSelectedItem().toString().split(" ");
+            String cadena[] = spinVariedad.getSelectedItem().toString().split(" -");
             String nombreVariedad = cadena[0];
 
             double pesoNeto = gestionTablaVista.getPesoNeto(nombreVariedad);
+
             String envase = gestionTablaVista.getTipoEnvase();
 
             pesaje.setPesoNeto(pesoNeto / cantTrabajadores);
