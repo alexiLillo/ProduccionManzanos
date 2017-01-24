@@ -21,6 +21,7 @@ public class TablaVista {
     private String ID_Producto;
     private String TipoEnvase;
     private float KilosNetoEnvase;
+    private String Clase;
 
     //constructor
     public TablaVista() {
@@ -139,6 +140,14 @@ public class TablaVista {
 
     public void setID_Producto(String ID_Producto) {
         this.ID_Producto = ID_Producto;
+    }
+
+    public String getClase() {
+        return Clase;
+    }
+
+    public void setClase(String clase) {
+        Clase = clase;
     }
 
     //auto-instancia (creo)

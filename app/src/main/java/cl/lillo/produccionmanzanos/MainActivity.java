@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String sector = "";
     private String cuartel = "";
     private String variedad = "";
+    private String clase = "";
     private String pesador = "";
 
     private ArrayList<String> listaTrab = new ArrayList<>();
@@ -153,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
                     spinSector.setAdapter(adapterS);
                     ArrayAdapter adapterV = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectVariedad("", "", ""));
                     spinVariedad.setAdapter(adapterV);
-                    ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
-                    spinCuartel.setAdapter(adapterC);
+                    //ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
+                    //spinCuartel.setAdapter(adapterC);
                 }
             }
 
@@ -181,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
                     spinSector.setAdapter(adapterS);
                     ArrayAdapter adapterV = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectVariedad("", "", ""));
                     spinVariedad.setAdapter(adapterV);
-                    ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
-                    spinCuartel.setAdapter(adapterC);
+                    //ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
+                    //spinCuartel.setAdapter(adapterC);
                 }
             }
 
@@ -206,8 +207,8 @@ public class MainActivity extends AppCompatActivity {
                     cuartel = "";
                     ArrayAdapter adapterV = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectVariedad("", "", ""));
                     spinVariedad.setAdapter(adapterV);
-                    ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
-                    spinCuartel.setAdapter(adapterC);
+                    //ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
+                    //spinCuartel.setAdapter(adapterC);
                 }
             }
 
@@ -216,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //SPIN CUARTEL CARGA AHORA LAS CLASES
 
         spinVariedad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -223,13 +226,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!spinVariedad.getItemAtPosition(position).toString().equals("Seleccione...")) {
                     String[] split = spinVariedad.getItemAtPosition(position).toString().split("-");
                     variedad = split[1].replace(" ", "");
-                    ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel(fundo, potrero, sector, variedad));
-                    spinCuartel.setAdapter(adapterC);
+                    //ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel(fundo, potrero, sector, variedad));
+                    //spinCuartel.setAdapter(adapterC);
                 } else if (spinVariedad.getItemAtPosition(position).toString().equals("Seleccione...")) {
                     variedad = "";
                     cuartel = "";
-                    ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
-                    spinCuartel.setAdapter(adapterC);
+                    //ArrayAdapter adapterC = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectCuartel("", "", "", ""));
+                    //spinCuartel.setAdapter(adapterC);
                 }
             }
 
@@ -239,9 +242,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //cargar spin cuartel con clases
+        ArrayAdapter adapterC = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gestionTablaVista.selectClases());
+        spinCuartel.setAdapter(adapterC);
         spinCuartel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                clase = spinCuartel.getItemAtPosition(position).toString().replace(" ", "");
+                /*
                 if (!spinCuartel.getItemAtPosition(position).toString().equals("Seleccione...")) {
                     String[] split = spinCuartel.getItemAtPosition(position).toString().split("-");
                     cuartel = split[1].replace(" ", "");
@@ -251,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     //con cuartel
                     //cuartel = "";
                 }
+                */
             }
 
             @Override
@@ -294,7 +303,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registrarBin(final ArrayList<String> qrBin) {
-        if (!fundo.equals("") && !potrero.equals("") && !sector.equals("") && !variedad.equals("") && !cuartel.equals("") && !qrbin.getText().toString().equals("S/D") && !cantidadTrabajadores.getText().toString().equals("S/D") && !cuadrilla.getText().toString().equals("S/D")) {
+        //&& !cuartel.equals("")
+        if (!fundo.equals("") && !potrero.equals("") && !sector.equals("") && !variedad.equals("") && !qrbin.getText().toString().equals("S/D") && !cantidadTrabajadores.getText().toString().equals("S/D") && !cuadrilla.getText().toString().equals("S/D")) {
             final Pesaje pesaje = new Pesaje();
             pesaje.setProducto("25");
             //pesaje.setQRenvase(qrBin);
@@ -306,7 +316,9 @@ public class MainActivity extends AppCompatActivity {
             pesaje.setPotrero(potrero);
             pesaje.setSector(sector);
             pesaje.setVariedad(variedad);
-            pesaje.setCuartel(cuartel);
+            pesaje.setClase(clase);
+            //pesaje.setCuartel(cuartel);
+            pesaje.setCuartel("C01");
 
             Calendar c = Calendar.getInstance();
             int day = c.get(Calendar.DAY_OF_MONTH);
@@ -338,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
             String cadena[] = spinVariedad.getSelectedItem().toString().split(" -");
             String nombreVariedad = cadena[0];
 
-            double pesoNeto = gestionTablaVista.getPesoNeto(nombreVariedad);
+            double pesoNeto = gestionTablaVista.getPesoNeto(nombreVariedad, spinCuartel.getSelectedItem().toString());
 
             String envase = gestionTablaVista.getTipoEnvase();
 
@@ -355,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
             pesaje.setUsuarioModificaion(getImei(getApplicationContext()));
 
             new AlertDialog.Builder(this)
-                    .setTitle("Registrar bins")
+                    .setTitle("Registrar bins categoría: " + clase)
                     .setCancelable(true)
                     .setMessage("¿Desea registrar: " + qrbin.getText() + "\nperteneciente a los " + cantidadTrabajadores.getText() + " trabajadores\nde la cuadrilla: " + cuadrilla.getText() + "?")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {

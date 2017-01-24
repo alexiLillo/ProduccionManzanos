@@ -16,6 +16,7 @@ public class Pesaje {
     private String Potrero;
     private String Sector;
     private String Variedad;
+    private String Clase;
     private String Cuartel;
     private String FechaHora;       /* yyyy/MM/dd hh:mm:ss */
     private double PesoNeto;
@@ -187,6 +188,14 @@ public class Pesaje {
 
     public void setVariedad(String variedad) {
         Variedad = variedad;
+    }
+
+    public String getClase() {
+        return Clase;
+    }
+
+    public void setClase(String clase) {
+        Clase = clase;
     }
 
     public String getTipoRegistro() {
