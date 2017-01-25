@@ -635,6 +635,8 @@ public class MainActivity extends AppCompatActivity {
         txtTrabajadorCosulta.setText("S/D");
         txtBinsDiaTrabajador.setText("S/D");
         txtBinsMesTrabajador.setText("S/D");
+
+        spinCuartel.setSelection(0,true);
     }
 
 
