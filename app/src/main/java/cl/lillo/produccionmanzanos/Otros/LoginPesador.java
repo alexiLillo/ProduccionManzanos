@@ -213,6 +213,10 @@ public class LoginPesador extends Activity {
                     connected = true;
                 if (red.getExtraInfo().contains("Fosforos"))
                     connected = true;
+                if (red.getExtraInfo().contains("Manzanos1"))
+                    connected = true;
+                if (red.getExtraInfo().contains("Manzanos2"))
+                    connected = true;
             }
         }
         return connected;
