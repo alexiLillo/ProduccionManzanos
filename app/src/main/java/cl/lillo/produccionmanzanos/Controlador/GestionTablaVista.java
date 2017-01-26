@@ -207,9 +207,9 @@ public class GestionTablaVista {
         try {
             SQLiteDatabase data = helper.getReadableDatabase();
             Cursor cursor = data.rawQuery("select distinct Clase from TablaVista", null);
-            //if (cursor.getCount() > 1) {
-            //    lista.add("Seleccione...");
-            //}
+            if (cursor.getCount() > 1) {
+                lista.add("Seleccione...");
+            }
             while (cursor.moveToNext()) {
                 lista.add(cursor.getString(0));
             }
