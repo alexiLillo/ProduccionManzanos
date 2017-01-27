@@ -89,12 +89,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="  Fundo:" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:text="  Potrero:" />
 
                             <TextView
@@ -102,6 +96,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="  Sector:" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="  Variedad:" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -110,7 +110,7 @@
                             android:orientation="horizontal">
 
                             <Spinner
-                                android:id="@+id/spinFundo"
+                                android:id="@+id/spinPotrero"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left|center" />
@@ -123,7 +123,7 @@
                                 android:orientation="horizontal" />
 
                             <Spinner
-                                android:id="@+id/spinPotrero"
+                                android:id="@+id/spinSector"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal|center"
@@ -137,7 +137,7 @@
                                 android:orientation="horizontal" />
 
                             <Spinner
-                                android:id="@+id/spinSector"
+                                android:id="@+id/spinVariedad"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right|center"
@@ -161,13 +161,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="  Variedad:" />
+                                android:text="  Categoría:" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="  Categoría:" />
+                                android:text="  Envase:" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -176,7 +176,7 @@
                             android:orientation="horizontal">
 
                             <Spinner
-                                android:id="@+id/spinVariedad"
+                                android:id="@+id/spinClase"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left|center"
@@ -190,7 +190,7 @@
                                 android:orientation="horizontal" />
 
                             <Spinner
-                                android:id="@+id/spinCuartel"
+                                android:id="@+id/spinEnvase"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right|center"

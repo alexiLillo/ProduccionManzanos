@@ -220,6 +220,26 @@ public class GestionTablaVista {
         return lista;
     }
 
+    public ArrayList<String> selectEnvases(String variedad, String clase) {
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            SQLiteDatabase data = helper.getReadableDatabase();
+            Cursor cursor = data.rawQuery("select distinct TipoEnvase from TablaVista where ID_Producto = '25' and ID_Variedad = '" + variedad + "' and Clase = '" + clase + "'", null);
+            if (cursor.getCount() > 1) {
+                lista.add("Seleccione...");
+            }
+            while (cursor.moveToNext()) {
+                lista.add(cursor.getString(0));
+            }
+            data.close();
+        } catch (Exception ex) {
+            Log.w(TAG, "...Error al seleccionar Clase de TablaVista: " + ex.getMessage());
+        }
+        System.out.println(variedad + "-----------------" + clase + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> lista: " + lista.toString());
+        return lista;
+    }
+
+    /*
     public String getTipoEnvase() {
         String tipoEnvase = "";
         try {
@@ -234,12 +254,13 @@ public class GestionTablaVista {
         }
         return tipoEnvase;
     }
+    */
 
-    public float getPesoNeto(String nombreVariedad, String clase) {
+    public float getPesoNeto(String variedad, String clase, String tipoEnvase) {
         float pesoNeto = 0;
         try {
             SQLiteDatabase data = helper.getReadableDatabase();
-            Cursor cursor = data.rawQuery("select KilosNetoEnvase from TablaVista where ID_Producto = '25' and nombreVariedad = '" + nombreVariedad + "' and Clase = '" + clase + "'", null);
+            Cursor cursor = data.rawQuery("select KilosNetoEnvase from TablaVista where ID_Producto = '25' and ID_Variedad = '" + variedad + "' and Clase = '" + clase + "' and TipoEnvase = '" + tipoEnvase + "'", null);
             while (cursor.moveToNext()) {
                 pesoNeto = cursor.getFloat(0);
             }
