@@ -63,6 +63,8 @@ public class Sync {
         if (conectado(context)) {
             ProgressDialog progress = new ProgressDialog(context);
             progress.setMessage("Sincronizando, por favor espere...");
+            progress.setCanceledOnTouchOutside(false);
+            progress.setCancelable(false);
             new ServicioCompleto(progress, syncCompleta, context).execute();
             return true;
         } else {
@@ -109,6 +111,8 @@ public class Sync {
         if (conectado(context)) {
             ProgressDialog progress = new ProgressDialog(context);
             progress.setMessage("Sincronizando, por favor espere...");
+            progress.setCanceledOnTouchOutside(false);
+            progress.setCancelable(false);
             new ServicioPesaje(progress, syncCompleta, context).execute();
             return true;
         } else {

@@ -12,9 +12,9 @@ import java.sql.SQLException;
  * Created by Alexi on 04/07/2016.
  */
 public class ConexionHelperSQLServer {
-    String ip = "192.168.4.228:1434";
+    String ip = "192.168.4.154:1433";
     String classs = "net.sourceforge.jtds.jdbc.Driver";
-    String db = "GESTIONPRODCAF_Desarrollo";
+    String db = "GESTIONPRODCAF";
     String user = "GESTIONPRODCAF";
     String pass = "GESTIONPRODCAF";
     @SuppressLint("NewApi")
