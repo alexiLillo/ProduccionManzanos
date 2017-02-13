@@ -176,6 +176,8 @@ public class Sync {
                     connected = true;
                 if (red.getExtraInfo().contains("Fosforos"))
                     connected = true;
+                if (red.getExtraInfo().contains("Manzanos"))
+                    connected = true;
                 //MOMENTANO POR DESARROLLO
                 //connected = true;
             }

@@ -47,7 +47,7 @@ public class LoginPesador extends Activity {
         if (conectado(this)) {
             if (fechaCorrecta()) {
                 escanear();
-                Toast.makeText(this, "Escanear código de Pesador", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Escanear código de Anotador", Toast.LENGTH_LONG).show();
             } else {
                 new AlertDialog.Builder(this)
                         .setTitle("Atención!")
@@ -61,7 +61,7 @@ public class LoginPesador extends Activity {
             }
         } else {
             escanear();
-            Toast.makeText(this, "Escanear código de Pesador", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Escanear código de Anotador", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -121,7 +121,7 @@ public class LoginPesador extends Activity {
 
     public void escanear() {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-        scanIntegrator.setPrompt("Escanear código de Pesador");
+        scanIntegrator.setPrompt("Escanear código de Anotador");
         scanIntegrator.setBeepEnabled(false);
         scanIntegrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
         scanIntegrator.setOrientationLocked(true);
